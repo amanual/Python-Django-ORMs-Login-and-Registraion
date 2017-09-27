@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Registration</title>
+</head>
+<body>
+        
+        <div>
+            <h2>Registration</h2>
+            <form action="/create" method="post">
+                {% csrf_token %}                
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <table>
+                    <tr>
+                        <td>First Name: </td>
+                        <td><input type="text" name="first_name"></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name: </td>
+                        <td><input type="text" name="last_name" ></td>
+                    </tr>
+                    <tr>
+                        <td>Email: </td>
+                        <td><input type="text" name="email"></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td><input type="text" name="password"></td>
+                    </tr>
+                    <tr>
+                        <td>Confirm Password: </td>
+                        <td><input type="text" name="confirmation"></td>
+                    </tr>
+                </table>
+                <input type="submit" name="register" value="Register" class="reg">
+            </form>
+        </div>
+        <div>
+            <h2>Login</h2>
+            <form action="/login" method="post">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>Email: </td>
+                        <td><input type="text" name="email"></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td><input type="text" name="password"></td>
+                    </tr>                    
+                </table>
+                <input type="submit" name="login" value="Login" class="log">            
+            </form>
+        </div>
+        <div>
+                <h3>Users</h3>
+            <table>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Remove</th>
+                </tr>
+                {% for i in user_data %}
+                <tr> 
+                    <td> {{i.first_name}} </td>
+                    <td>&nbsp; {{i.last_name}} </td>
+                    <td>&nbsp; {{i.email}} </td>
+                    <td>&nbsp; {{i.password}} </td> 
+                    <td>&nbsp; <a href="/remove/{{i.id}}">  remove </a> </td>                                  
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    
+</body>
+</html>
